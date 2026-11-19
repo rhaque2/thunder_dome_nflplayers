@@ -1,1 +1,1 @@
-# thunder_dome_nflplayers
+# Contains all drafted NFL player data from the Thunder Dome fantasy football league.
