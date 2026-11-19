@@ -38,12 +38,17 @@ footer{text-align:center;color:var(--mu);font-size:12px;padding:0 14px calc(24px
 </style></head><body>
 <header><div class="hw"><div class="eb">THUNDER DOME · 10-TEAM HALF PPR</div><h1>Player Value Hub</h1><p>Trade finder, eight years of draft history, owner tendencies and league lore.</p></div></header>
 <nav><div class="nw">
-<button data-t="block">Trade Block</button><button data-t="trade">Trade Finder</button><button data-t="vals">Value Board</button><button data-t="draft">Draft History</button><button data-t="play">Player Lookup</button><button data-t="tend">Owner Tendencies</button><button data-t="lore">Lore</button>
+<button data-t="target">Trade Target</button><button data-t="block">Trade Block</button><button data-t="trade">Trade Finder</button><button data-t="vals">Value Board</button><button data-t="draft">Draft History</button><button data-t="play">Player Lookup</button><button data-t="tend">Owner Tendencies</button><button data-t="lore">Lore</button>
 </div></nav>
 <main>
+<section id="target" hidden>
+<h2>Trade Target</h2><p class="mu">Pick your team, then type a player you want from another team (add a second to target a pair). You’ll see the packages from your roster most likely to get a deal done, ranked by how much the other team’s lineup improves.</p>
+<div class="ctl"><select id="tm"></select><input id="t1" list="dlt" placeholder="Player you want"><input id="t2" list="dlt" placeholder="Second player (optional)"></div><datalist id="dlt"></datalist>
+<button class="m" id="tg">Find packages</button><div id="to"></div>
+</section>
 <section id="block" hidden>
-<h2>Trade Block</h2><p class="mu">Type a player you want to shop (add a second to shop a pair). You’ll get fair offers from every other team: 1-for-1, 1-for-2, 2-for-1, 2-for-2 or 2-for-3. Offers are ranked by how much both lineups improve.</p>
-<div class="ctl"><input id="b1" list="dlp" placeholder="Player on the block"><input id="b2" list="dlp" placeholder="Second player (optional)"></div><datalist id="dlp"></datalist>
+<h2>Trade Block</h2><p class="mu">Type a player you want to shop (add a second or third to shop a package). You’ll get fair offers from every other team: 1-for-1, 1-for-2, 2-for-1, 2-for-2, 2-for-3 or 3-for-3. Offers are ranked by how much both lineups improve.</p>
+<div class="ctl"><input id="b1" list="dlp" placeholder="Player on the block"><input id="b2" list="dlp" placeholder="Second player (optional)"><input id="b3" list="dlp" placeholder="Third player (optional)"></div><datalist id="dlp"></datalist>
 <button class="m" id="bg">Find offers</button><div id="bo"></div>
 </section>
 <section id="trade" hidden>
@@ -108,7 +113,7 @@ const T=[
 {n:"Tanvir",t:"Expert Ballhandler",r:"5-5",d:"Fire",s:"Jayden Daniels,QB,19.6;D’Andre Swift,RB,15.6;Emmett Johnson,RB,8.4;Ja’Marr Chase,WR,21.1;Zay Flowers,WR,11;Trey McBride,TE,9.4;Rico Dowdle,RB,8.2;Josh Downs,WR,7.8;Bills,DST,7.1;Tyler Bass,K,10.9;Kenneth Walker III,RB,24.1,Q;Jakobi Meyers,WR,9.2;Kyren Williams,RB,13,B;Tyler Shough,QB,14.9;Buccaneers,DST,4.6;Pat Bryant,WR,6.6;Romeo Doubs,WR,0,I"},
 {n:"Umer",t:"Send me Nix Pics",r:"2-8",d:"Fire",s:"Kirk Cousins,QB,14.7;Bhayshul Tuten,RB,15.9;Jonah Coleman,RB,17.8;Stefon Diggs,WR,10.5;Malik Nabers,WR,12.7;Chig Okonkwo,TE,7.8;Cam Skattebo,RB,13.1;Rome Odunze,WR,9.7;Lions,DST,5.8;Ka’imi Fairbairn,K,10.7;Drake Maye,QB,0,I;Blake Corum,RB,5,B;Deebo Samuel Sr.,WR,8.8;Tucker Kraft,TE,7,B;A.J. Brown,WR,14,BQ;Emari Demercado,RB,7.6;Ladd McConkey,WR,9,Q"},
 {n:"Shakib",t:"Chad Powers",r:"5-5",d:"Ice",s:"Joe Burrow,QB,22.9;Breece Hall,RB,11.4;Jaylen Warren,RB,14.4;Amon-Ra St. Brown,WR,14.3;George Pickens,WR,13.2;Isaiah Likely,TE,10.1;Saquon Barkley,RB,11;Luther Burden III,WR,12.4;49ers,DST,5.4;Chase McLaughlin,K,9.5;Kaelon Black,RB,6;Braelon Allen,RB,6.7;Denzel Boston,WR,7,B;Germie Bernard,WR,2.5;Jaguars,DST,7;Elic Ayomanor,WR,8.2;Tank Bigsby,RB,0,I"},
-{n:"Habeeb",t:"SF 69ers",r:"6-4",d:"Fire",s:"Trevor Lawrence,QB,19.5;Christian McCaffrey,RB,17.6;Aaron Jones Sr.,RB,7.3;CeeDee Lamb,WR,18.9;Rashee Rice,WR,10.5;Travis Kelce,TE,9.5;Tyler Warren,TE,6.7;Mike Evans,WR,10,Q;Bears,DST,6;Spencer Shrader,K,9.4;Jeremiyah Love,RB,0,I;Rhamondre Stevenson,RB,9,B;Dak Prescott,QB,21.9;T.J. Hockenson,TE,9,Q;Keenan Allen,WR,5.7;Packers,DST,7,B;Davante Adams,WR,0,I"},
+{n:"Habeeb",t:"SF 69ers",r:"6-4",d:"Fire",s:"Trevor Lawrence,QB,19.5;Christian McCaffrey,RB,17.6;Aaron Jones Sr.,RB,7.3;CeeDee Lamb,WR,18.9;Rashee Rice,WR,10.5;Travis Kelce,TE,9.5;Tyler Warren,TE,6.7;Mike Evans,WR,10,Q;Bears,DST,6;Spencer Shrader,K,9.4;Jeremiyah Love,RB,0,I;Rhamondre Stevenson,RB,9,B;Dak Prescott,QB,21.9;Keenan Allen,WR,5.7;Courtland Sutton,WR,10;Packers,DST,7,B;Davante Adams,WR,0,I"},
 {n:"Shosh",t:"Astoria Ball Busters",r:"3-7",d:"Ice",s:"Jared Goff,QB,14.8;Travis Etienne Jr.,RB,9.8;Jordan Mason,RB,7.9;Justin Jefferson,WR,16.4;Matthew Golden,WR,11,B;Harold Fannin Jr.,TE,7,B;Garrett Wilson,WR,11.2;Xavier Worthy,WR,6;Chiefs,DST,8.2;Brandon Aubrey,K,11.2;Alvin Kamara,RB,6.4;Devaughn Vele,WR,4.8;Emeka Egbuka,WR,9.2;Matt Gay,K,8;Kenny Gainwell,RB,7.7;Jahan Dotson,WR,4,B;Michael Pittman Jr.,WR,0,I"},
 {n:"Ruhul",t:"Jump The Chark",r:"8-2",d:"Fire",s:"Caleb Williams,QB,19;Jonathan Taylor,RB,14.9;Derrick Henry,RB,13.5;Tee Higgins,WR,13.8;Parker Washington,WR,13.3;Brock Bowers,TE,12.3,Q;Jordyn Tyson,WR,9.1;Carnell Tate,WR,10.6,Q;Texans,DST,6.9;Will Reichard,K,10.1;Chris Olave,WR,11.2;Zach Charbonnet,RB,8,B;Brock Purdy,QB,17.6;Vikings,DST,4.5;Mark Andrews,TE,5.7;Ja’Kobi Lane,WR,6;Jacory Croskey-Merritt,RB,0,I"}
 ];
@@ -228,7 +233,7 @@ function vl(){const f=$("#vp").value,o=$("#vo").value,L=[];
 $("#vp").onchange=vl;$("#vo").onchange=vl;
 const nmk=p=>p.pos!=="K"&&p.pos!=="DST";
 $("#dlp").innerHTML=window.TV.flatMap(t=>t.p).filter(nmk).map(p=>p.n).sort().map(n=>'<option value="'+n+'">').join("");
-function blk(){const X=window.TX,T=window.TV,out=$("#bo"),q=[$("#b1").value,$("#b2").value].map(s=>s.trim().toLowerCase()).filter(Boolean);
+function blk(){const X=window.TX,T=window.TV,out=$("#bo"),q=[$("#b1").value,$("#b2").value,$("#b3").value].map(s=>s.trim().toLowerCase()).filter(Boolean);
  if(!q.length){out.innerHTML='<div class="c mu">Pick a player to see offers.</div>';return}
  const all=[];T.forEach((t,i)=>t.p.forEach(p=>nmk(p)&&all.push({t:i,p})));
  const f=q.map(s=>all.filter(o=>o.p.n.toLowerCase().includes(s)).sort((a,b)=>b.p.av-a.p.av)[0]);
@@ -247,15 +252,36 @@ function blk(){const X=window.TX,T=window.TV,out=$("#bo"),q=[$("#b1").value,$("#
  res.sort((a,b)=>b.sc-a.sc);const cnt={},top=[];
  for(const d of res){if(top.length>=10)break;if((cnt[d.b]||0)>=2)continue;cnt[d.b]=(cnt[d.b]||0)+1;top.push(d)}
  out.innerHTML='<div class="c"><b>'+T[me].n+'</b> is shopping '+give.map(p=>p.n+' <span class="pos">'+p.pos+'</span>').join(" + ")+' <span class="mu">(value '+X.pv(give).toFixed(0)+')</span></div>'+
-  (top.length?top.map(X.dealCard).join(""):'<div class="c">No fair offers right now. Try adding a second player to the block.</div>')}
-$("#bg").onclick=blk;$("#b1").onchange=blk;$("#b2").onchange=blk;
+  (top.length?top.map(X.dealCard).join(""):'<div class="c">No fair offers right now. Try adding another player to the block.</div>')}
+$("#tm").innerHTML='<option value="">Select your team</option>'+window.TV.map((t,i)=>'<option value="'+i+'">'+t.n+' – '+t.t+'</option>').join("");
+$("#dlt").innerHTML=$("#dlp").innerHTML;
+function tgt(){const X=window.TX,T=window.TV,out=$("#to"),me=$("#tm").value,q=[$("#t1").value,$("#t2").value].map(s=>s.trim().toLowerCase()).filter(Boolean);
+ if(me===""||!q.length){out.innerHTML='<div class="c mu">Select your team and a player you want.</div>';return}
+ const m=+me,all=[];T.forEach((t,i)=>t.p.forEach(p=>nmk(p)&&all.push({t:i,p})));
+ const f=q.map(s=>{const c=all.filter(o=>o.p.n.toLowerCase().includes(s)),oth=c.filter(o=>o.t!==m);return(oth.length?oth:c).sort((a,b)=>b.p.av-a.p.av)[0]});
+ const bad=f.findIndex(x=>!x);if(bad>=0){out.innerHTML='<div class="c">Couldn’t find “'+q[bad]+'” on any roster.</div>';return}
+ if(f.some(x=>x.t===m)){out.innerHTML='<div class="c">That player is already on your team. Pick someone from another roster.</div>';return}
+ const pt=f[0].t;if(f.some(x=>x.t!==pt)){out.innerHTML='<div class="c">Both targets need to be on the same team.</div>';return}
+ const want=[...new Set(f.map(x=>x.p))],pool=T[m].p.filter(p=>X.ok(p)&&nmk(p)&&p.av>=5),cs=[];
+ pool.forEach((p,i)=>{cs.push([p]);for(let j=i+1;j<pool.length;j++){cs.push([p,pool[j]]);for(let k=j+1;k<pool.length;k++)cs.push([p,pool[j],pool[k]])}});
+ const res=[];
+ cs.forEach(g=>{if(g.length>want.length+1||g.length<want.length-1||!X.fair(g,want))return;
+  const dA=X.lineup(T[m].p.filter(p=>!g.includes(p)).concat(want)).s-X.base[m],dB=X.lineup(T[pt].p.filter(p=>!want.includes(p)).concat(g)).s-X.base[pt];
+  if(dA<-2||dB<-1)return;
+  const gp=Math.abs(X.pv(g)-X.pv(want)),win=dA>=.5&&dB>=.5;
+  res.push({a:m,b:pt,x:g,y:want,dA,dB,g:gp,near:!win,sc:(win?10:0)+dB+.3*dA-gp*.05})});
+ res.sort((u,v)=>v.sc-u.sc);const cnt={},top=[];
+ for(const d of res){if(top.length>=10)break;const k=d.x.slice().sort((u,v)=>v.av-u.av)[0].n;if((cnt[k]||0)>=3)continue;cnt[k]=(cnt[k]||0)+1;top.push(d)}
+ out.innerHTML='<div class="c"><b>'+T[m].n+'</b> is targeting '+want.map(p=>p.n+' <span class="pos">'+p.pos+'</span>').join(" + ")+' from <b>'+T[pt].n+'</b> <span class="mu">(value '+X.pv(want).toFixed(0)+')</span></div>'+(top.length?top.map(X.dealCard).join(""):'<div class="c">No fair packages from your roster right now. Try a lower-value target, or a pair.</div>')}
+$("#tg").onclick=tgt;$("#tm").onchange=tgt;$("#t1").onchange=tgt;$("#t2").onchange=tgt;
+$("#bg").onclick=blk;$("#b1").onchange=blk;$("#b2").onchange=blk;$("#b3").onchange=blk;
 const tabs=[...document.querySelectorAll("nav button")];
-function go(id){if(!document.getElementById(id))id="block";
+function go(id){if(!document.getElementById(id))id="target";
  tabs.forEach(b=>b.classList.toggle("on",b.dataset.t===id));
  document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);
- if(id==="block")blk();if(id==="trade")window.initTrade();if(id==="vals")vl();if(id==="draft")rd();if(id==="play")pl();if(id==="tend")tn();
+ if(id==="target")tgt();if(id==="block")blk();if(id==="trade")window.initTrade();if(id==="vals")vl();if(id==="draft")rd();if(id==="play")pl();if(id==="tend")tn();
  try{history.replaceState(null,"","#"+id)}catch(e){}window.scrollTo(0,0)}
 tabs.forEach(b=>b.onclick=()=>go(b.dataset.t));
-go(location.hash.slice(1)||"block");
+go(location.hash.slice(1)||"target");
 })();
 </script></body></html>
